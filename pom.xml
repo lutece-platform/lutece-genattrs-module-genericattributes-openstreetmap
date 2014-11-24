@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>lutece-plugins-pom</artifactId>
+		<groupId>fr.paris.lutece.plugins</groupId>
+		<version>3.7</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>fr.paris.lutece.plugins</groupId>
+	<artifactId>module-genericattributes-openstreetmap</artifactId>
+	<packaging>lutece-plugin</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>Lutece Generic Attributes openstreet map module</name>
+	<repositories>
+		<repository>
+			<id>lutece</id>
+			<name>luteceRepository</name>
+			<url>http://dev.lutece.paris.fr/maven_repository</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+          <id>luteceSnapshot</id>
+          <name>luteceSnapshot</name>
+          <url>http://dev.lutece.paris.fr/snapshot_repository</url>
+          <snapshots>
+              <enabled>true</enabled>
+          </snapshots>
+        </repository>
+	</repositories>
+	<dependencies>
+		<dependency>
+			<groupId>fr.paris.lutece.plugins</groupId>
+			<artifactId>plugin-genericattributes</artifactId>
+			<version>[1.0.0-SNAPSHOT,)</version>
+			<type>lutece-plugin</type>
+		</dependency>
+	</dependencies>
+	
+	<properties>
+		<componentName>genericattributes-openstreetmap</componentName>
+		<jiraProjectName>MGENATTOSM</jiraProjectName>
+		<jiraComponentId>10320</jiraComponentId>
+	</properties>
+    <scm>
+        <connection>scm:svn:http://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/genericattributes/module-genericattributes-openstreetmap</connection>
+        <developerConnection>scm:svn:https://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/genericattributes/module-genericattributes-openstreetmap</developerConnection>
+        <url>http://dev.lutece.paris.fr/viewvc/lutece/portal/trunk/plugins/genericattributes/module-genericattributes-openstreetmap</url>
+    </scm>
+</project>

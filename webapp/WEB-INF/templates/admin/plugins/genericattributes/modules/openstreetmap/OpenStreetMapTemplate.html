@@ -1,0 +1,36 @@
+<input type="hidden" id="${entry.idEntry}_map_provider" name="${entry.idEntry}_map_provider" value="${entry.mapProvider.key}"/>
+<div class="form-element" id="${entry.idEntry}_waiting" style="display:none;">
+ 	#i18n{module.genericattributes.openstreetmap.loading}
+</div>
+<div class="row">
+<div id="${entry.idEntry}_gmap" class="col-md-5" style="height:300px; border:1px solid black;margin:5px 0;"></div>
+<div id="${entry.idEntry}_addr_list" class="list-group col-md-6 col-md-offset-1" style=" height:300px;border:1px solid black;margin-top:5px;"></div>
+</div>
+<button type="button" onclick="addr_search(${entry.idEntry});" id="${entry.idEntry}_gmap_button" class="btn btn-primary btn-small"><i class="icon-search icon-white"></i>&nbsp;Trouver sur la carte</button>
+
+
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<script type="text/javascript">
+var map;
+var genericAttributes_id = '${entry.idEntry}';
+$(document).ready( function (  ) 
+		{
+			map = L.map('${entry.idEntry}_gmap').setView([48.853, 2.35], 13);
+			L.tileLayer('http://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {attribution: 'Imagery © <a href="http://mapbox.com">Mapbox</a>', id: 'examples.map-i875mjb7'}).addTo(map);
+			$( '#${entry.idEntry}_address' ).keypress( function(event) {
+				if (event.keyCode == '13') { // Enter button
+				     event.preventDefault(  );
+				     $('#${entry.idEntry}_gmap_button').click();
+				}
+			});
+			
+			map.on('click', onMapClick);
+		});
+		
+		
+
+</script>
+<script type="text/javascript" src="js/plugins/genericattributes/modules/openstreetmap/genericattributes_openstreetmap.js"></script>
+
+<noscript>#i18n{module.genericattributes.openstreetmap.javascript.disabled}</noscript>
