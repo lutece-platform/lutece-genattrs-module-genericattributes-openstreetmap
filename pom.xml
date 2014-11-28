@@ -37,7 +37,7 @@
 	
 	<properties>
 		<componentName>genericattributes-openstreetmap</componentName>
-		<jiraProjectName>MGENATTOSM</jiraProjectName>
+		<jiraProjectName>MGATTOSM</jiraProjectName>
 		<jiraComponentId>10320</jiraComponentId>
 	</properties>
     <scm>
