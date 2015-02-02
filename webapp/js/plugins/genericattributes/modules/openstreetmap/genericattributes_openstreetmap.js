@@ -41,7 +41,7 @@ function onMapClick(e) {
 		  map.panTo(location);
 		  $(searchInput).val(addr);
 		  $(xInput).val(lat);
-		  $(xInput).val(lon);
+		  $(yInput).val(lon);
 	  }); 
 }
 
@@ -55,8 +55,8 @@ function chooseAddr(latChoose,lonChoose, elem)
 	marker = L.marker(location).addTo(map);
 	map.panTo(location);
 	map.setZoom(15);
-	addr = elem.innerText;
+	addr = elem.innerHTML;
 	$(searchInput).val(addr);
 	$(xInput).val(lat);
-	$(xInput).val(lon);
+	$(yInput).val(lon);
 }
