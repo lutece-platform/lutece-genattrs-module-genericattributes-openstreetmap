@@ -12,11 +12,35 @@
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 <script type="text/javascript">
+
+
 var map;
-var genericAttributes_id = '${entry.idEntry}';
+var genericAttributes_id = '${entry.idEntry}';	
+var searchInput = "#" + genericAttributes_id + "_address";
+var xInput = "#" + genericAttributes_id + "_x";
+var yInput = "#" + genericAttributes_id + "_y";
+var resultAff = "#" + genericAttributes_id + "_addr_list";
+
+
+var addr;
+var marker = null;
+
 $(document).ready( function (  ) 
-		{
-			map = L.map('${entry.idEntry}_gmap').setView([48.853, 2.35], 13);
+		{	
+			genericAttributes_id = '${entry.idEntry}';	
+			var lat = '${lat!}';
+			var lon = '${lon!}';
+			 bool= 'false';
+			if( lat != ''  &&  lon != '' ){
+			 lat = lat;
+			 lon = lon;
+			 bool= 'true';
+			}else {
+			 lat = 48.853;
+			 lon = 2.35;
+			};
+
+			map = L.map('${entry.idEntry}_gmap').setView([lat, lon], 10);
 			L.tileLayer('http://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {attribution: 'Imagery © <a href="http://mapbox.com">Mapbox</a>', id: 'examples.map-i875mjb7'}).addTo(map);
 			$( '#${entry.idEntry}_address' ).keypress( function(event) {
 				if (event.keyCode == '13') { // Enter button
@@ -25,11 +49,21 @@ $(document).ready( function (  )
 				}
 			});
 			
+			if( bool == 'true'){
+				if(marker != null){
+					map.removeLayer(marker);
+				}
+				var location = new L.LatLng(lat, lon);
+				marker = L.marker(location).addTo(map);
+				map.panTo(location);
+				map.setZoom(10);
+				lat = '';
+				lon = '';
+			}
 			map.on('click', onMapClick);
+				
 		});
-		
-		
-
+	
 </script>
 <script type="text/javascript" src="js/plugins/genericattributes/modules/openstreetmap/genericattributes_openstreetmap.js"></script>
 

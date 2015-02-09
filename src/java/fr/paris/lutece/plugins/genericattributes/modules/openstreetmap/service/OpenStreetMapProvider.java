@@ -48,6 +48,7 @@ public class OpenStreetMapProvider implements IMapProvider
     private static final String PROPERTY_KEY = "genericattributes-openstreetmap.key";
     private static final String PROPERTY_DISPLAYED_NAME = "genericattributes-openstreetmap.displayName";
     private static final String TEMPLATE_HTML = "/admin/plugins/genericattributes/modules/openstreetmap/OpenStreetMapTemplate.html";
+    private static final String TEMPLATE_RECAP_HTML = "/admin/plugins/genericattributes/modules/openstreetmap/OpenStreetMapTemplateRecap.html";
 
     /**
      * {@inheritDoc}
@@ -71,6 +72,13 @@ public class OpenStreetMapProvider implements IMapProvider
     public String getHtmlCode( )
     {
         return TEMPLATE_HTML;
+    }
+    /**
+     * {@inheritDoc}
+     */
+    public String getHtmlRecapCode( )
+    {
+        return TEMPLATE_RECAP_HTML;
     }
 
     /**

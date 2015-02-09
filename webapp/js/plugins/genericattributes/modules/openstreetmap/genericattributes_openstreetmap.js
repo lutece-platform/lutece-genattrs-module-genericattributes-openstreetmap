@@ -1,5 +1,4 @@
-var lat = 48.853;
-var lon = 2.35;
+
 var addr;
 var marker = null;
 var searchInput = "#" + genericAttributes_id + "_address";
@@ -7,8 +6,13 @@ var xInput = "#" + genericAttributes_id + "_x";
 var yInput = "#" + genericAttributes_id + "_y";
 var resultAff = "#" + genericAttributes_id + "_addr_list";
 
-function addr_search() 
+function addr_search(genericAttributes_id) 
 {
+ searchInput = "#" + genericAttributes_id + "_address";
+ xInput = "#" + genericAttributes_id + "_x";
+ yInput = "#" + genericAttributes_id + "_y";
+ resultAff = "#" + genericAttributes_id + "_addr_list";
+
   addr = $(searchInput).val();
   $.getJSON('http://nominatim.openstreetmap.org/search?format=json&limit=5&q=' + addr, function(data) {
 	  var resultList = "";
@@ -16,7 +20,7 @@ function addr_search()
 	  {
 		  $.each(data, function(key, val) {
 		  resultList += "<li class='list-group-item' onclick='chooseAddr(" +
-		    val.lat + ", " + val.lon + ",this);return false;'>" + val.display_name +
+		    val.lat + ", " + val.lon + ",this,"+ genericAttributes_id +");return false;'>" + val.display_name +
 		    '</li>';
 		  });
 	  }
@@ -30,8 +34,8 @@ function addr_search()
 }
 
 function onMapClick(e) {
-	if (marker != null)
-		map.removeLayer(marker);
+if (marker != null)
+	map.removeLayer(marker);
 	lat = e.latlng.lat;
 	lon = e.latlng.lng;
 	$.getJSON('http://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lon , function(data) {
@@ -43,10 +47,16 @@ function onMapClick(e) {
 		  $(xInput).val(lat);
 		  $(yInput).val(lon);
 	  }); 
+
 }
 
-function chooseAddr(latChoose,lonChoose, elem)
+function chooseAddr(latChoose,lonChoose, elem,genericAttributes_id )
 {
+
+	searchInput = "#" + genericAttributes_id + "_address";
+	xInput = "#" + genericAttributes_id + "_x";
+	yInput = "#" + genericAttributes_id + "_y";
+	resultAff = "#" + genericAttributes_id + "_addr_list";
 	if (marker != null)
 		map.removeLayer(marker);
 	lat = latChoose;
