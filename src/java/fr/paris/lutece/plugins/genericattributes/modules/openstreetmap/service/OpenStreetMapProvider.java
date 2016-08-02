@@ -103,4 +103,10 @@ public class OpenStreetMapProvider implements IMapProvider
         return "Open Street Map Provider";
     }
 
+	@Override
+	public Object getParameter(int arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
