@@ -8,7 +8,7 @@
 	<groupId>fr.paris.lutece.plugins</groupId>
 	<artifactId>module-genericattributes-openstreetmap</artifactId>
 	<packaging>lutece-plugin</packaging>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>Lutece Generic Attributes openstreet map module</name>
 	<repositories>
 		<repository>
@@ -41,8 +41,8 @@
 		<jiraComponentId>10320</jiraComponentId>
 	</properties>
     <scm>
-        <connection>scm:svn:http://dev.lutece.paris.fr/svn/lutece/portal/tags/module-genericattributes-openstreetmap-1.0.0</connection>
-        <developerConnection>scm:svn:https://dev.lutece.paris.fr/svn/lutece/portal/tags/module-genericattributes-openstreetmap-1.0.0</developerConnection>
-        <url>http://dev.lutece.paris.fr/viewvc/lutece/portal/tags/module-genericattributes-openstreetmap-1.0.0</url>
+        <connection>scm:svn:http://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/genericattributes/module-genericattributes-openstreetmap</connection>
+        <developerConnection>scm:svn:https://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/genericattributes/module-genericattributes-openstreetmap</developerConnection>
+        <url>http://dev.lutece.paris.fr/viewvc/lutece/portal/trunk/plugins/genericattributes/module-genericattributes-openstreetmap</url>
     </scm>
 </project>
