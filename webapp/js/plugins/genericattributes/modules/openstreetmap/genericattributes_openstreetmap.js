@@ -14,7 +14,7 @@ function addr_search(genericAttributes_id)
  resultAff = "#" + genericAttributes_id + "_addr_list";
 
   addr = $(searchInput).val();
-  $.getJSON('http://nominatim.openstreetmap.org/search?format=json&limit=5&q=' + addr, function(data) {
+  $.getJSON('https://nominatim.openstreetmap.org/search?format=json&limit=5&q=' + addr, function(data) {
 	  var resultList = "";
 	  if (data.length > 0)
 	  {
@@ -38,7 +38,7 @@ if (marker != null)
 	map.removeLayer(marker);
 	lat = e.latlng.lat;
 	lon = e.latlng.lng;
-	$.getJSON('http://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lon , function(data) {
+	$.getJSON('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lon , function(data) {
 		addr = data.display_name;
 		  var location = new L.LatLng(lat, lon);
 		  marker = L.marker(location).addTo(map);
