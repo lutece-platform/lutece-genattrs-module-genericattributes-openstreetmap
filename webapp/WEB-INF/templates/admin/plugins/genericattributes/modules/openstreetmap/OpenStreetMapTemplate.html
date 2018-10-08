@@ -4,9 +4,11 @@
 </div>
 <div class="row">
 <div id="${entry.idEntry}_gmap" class="col-md-5" style="height:300px; border:1px solid black;margin:5px 0;"></div>
-<div id="${entry.idEntry}_addr_list" class="list-group col-md-6 col-md-offset-1" style=" height:300px;border:1px solid black;margin-top:5px;"></div>
-</div>
-<button type="button" onclick="addr_search(${entry.idEntry});" id="${entry.idEntry}_gmap_button" class="btn btn-primary btn-small"><i class="icon-search icon-white"></i>&nbsp;Trouver sur la carte</button>
+<#if !(editModeValue?? && editModeValue=="ReadOnly")>
+    <div id="${entry.idEntry}_addr_list" class="list-group col-md-6 col-md-offset-1" style=" height:300px;border:1px solid black;margin-top:5px;"></div>
+    </div>
+    <button type="button" onclick="addr_search(${entry.idEntry});" id="${entry.idEntry}_gmap_button" class="btn btn-primary btn-small"><i class="icon-search icon-white"></i>&nbsp;Trouver sur la carte</button>
+</#if>
 
 
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
@@ -62,7 +64,9 @@ $(document).ready( function (  )
 				lat = '';
 				lon = '';
 			}
+<#if !(editModeValue?? && editModeValue=="ReadOnly")>
 			map.on('click', onMapClick);
+</#if>
 				
 		});
 	
