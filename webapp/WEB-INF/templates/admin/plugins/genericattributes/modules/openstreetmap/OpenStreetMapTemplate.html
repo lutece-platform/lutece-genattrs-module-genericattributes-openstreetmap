@@ -28,8 +28,8 @@ var marker = null;
 $(document).ready( function (  ) 
 		{	
 			genericAttributes_id = '${entry.idEntry}';	
-			var lat = '${lat!}';
-			var lon = '${lon!}';
+			var lat = '${lat!}' || $(xInput).val();
+			var lon = '${lon!}' || $(yInput).val();
 			 bool= 'false';
 			if( lat != ''  &&  lon != '' ){
 			 lat = lat;
