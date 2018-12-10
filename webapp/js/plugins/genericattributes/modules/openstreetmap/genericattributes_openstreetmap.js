@@ -44,8 +44,8 @@ if (marker != null)
 		  marker = L.marker(location).addTo(map);
 		  map.panTo(location);
 		  $(searchInput).val(addr);
-		  $(xInput).val(lat);
-		  $(yInput).val(lon);
+		  $(xInput).val(lon);
+		  $(yInput).val(lat);
 	  }); 
 
 }
@@ -67,6 +67,6 @@ function chooseAddr(latChoose,lonChoose, elem,genericAttributes_id )
 	map.setZoom(15);
 	addr = elem.innerHTML;
 	$(searchInput).val(addr);
-	$(xInput).val(lat);
-	$(yInput).val(lon);
+	$(xInput).val(lon);
+	$(yInput).val(lat);
 }
