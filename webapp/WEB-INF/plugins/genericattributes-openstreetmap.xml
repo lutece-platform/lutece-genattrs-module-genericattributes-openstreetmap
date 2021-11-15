@@ -4,7 +4,7 @@
     <!-- Plugin Informations -->
 	<name>genericattributes-openstreetmap</name>
 	<class>fr.paris.lutece.plugins.genericattributes.modules.openstreetmap.service.GenericAttributesOpenStreetMapPlugin</class>
-	<version>1.0.2</version>
+	<version>1.0.3-SNAPSHOT</version>
 	<description>module.genericattributes.openstreetmap.module.description</description>
 	<documentation/>
 	<installation/>
