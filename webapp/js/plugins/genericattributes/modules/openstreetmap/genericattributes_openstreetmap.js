@@ -64,7 +64,8 @@ function displayLocationOnMap(inputId){
 	const lat = document.getElementById(prefix + '_y').value;
 	const lon = document.getElementById(prefix + '_x').value;
 	if(lat === "" || lon === null){
-		alert("Veuillez saisir une adresse");
+		const message = document.getElementsByName("no_address_message")[0].value;
+		alert(message);
 		return;
 	}
 	const latlng = [lat, lon];
