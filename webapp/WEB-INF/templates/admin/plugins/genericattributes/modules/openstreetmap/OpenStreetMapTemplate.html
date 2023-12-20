@@ -10,9 +10,9 @@
 <input type="hidden" name="leafletMap"/>
 <#if !(editModeValue?? && editModeValue=="ReadOnly")>
 <div class="form-row">
-<button type="button" onclick=displayLocationOnMap(this.id) id="${idName}_gmap_button"
-            class="btn btn-primary btn-osm"><i class="icon-search icon-white"></i>&nbsp;Trouver sur la carte
-    </button>
+<button type="button" onclick=displayLocationOnMap(this.id) id="${idName}_gmap_button" class="btn btn-primary btn-osm">
+    #i18n{portal.util.labelSearch}
+</button>
 </div>
 <#else>
     <#assign responseX = "" >
