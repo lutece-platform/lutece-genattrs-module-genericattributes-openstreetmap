@@ -2,34 +2,33 @@
 <#assign iterationNumber = entry_iteration_number?c >
 <input type="hidden" id="${idName}_map_provider" name="${idName}_map_provider" value="${entry.mapProvider.key}"/>
 <input type="hidden" name="no_address_message" value="#i18n{module.genericattributes.openstreetmap.no_address_message}"/>
-<div class="form-row" id="${idName}_waiting" style="display:none;">
+<div class="form-element" id="${idName}_waiting" style="display:none;">
     #i18n{module.genericattributes.openstreetmap.loading}
 </div>
 <div class="form-row">
-<div id="${idName}_gmap" data-map="${iterationNumber}" class="col col-osm osm-map" onclick="setIdAttribute(this.id)"></div>
+<div id="${idName}_gmap" data-map="${iterationNumber}" class="col-md-5"
+     style="height:300px; border:1px solid black;margin:5px 0;" onclick="setIdAttribute(this.id)"></div>
 </div>
 <input type="hidden" name="leafletMap"/>
 <#if !(editModeValue?? && editModeValue=="ReadOnly")>
-<div class="form-row">
-<button type="button" onclick=displayLocationOnMap(this.id) id="${idName}_gmap_button" class="btn btn-primary btn-osm">
-    #i18n{portal.util.labelSearch}
+<button type="button" onclick=displayLocationOnMap(this.id) id="${idName}_gmap_button"
+        class="btn btn-primary btn-small"><i class="icon-search icon-white"></i>&nbsp;Trouver sur la carte
 </button>
-</div>
 <#else>
-    <#assign responseX = "" >
-    <#assign responseY = "" >
-    <#if getResponseContainingTheFieldWithCode( list_responses, "X" )?? >
-        <#assign responseX = getResponseContainingTheFieldWithCode( list_responses, "X" ).toStringValueResponse >
-    </#if>
-    <#if getResponseContainingTheFieldWithCode( list_responses, "Y" )?? >
-        <#assign responseY = getResponseContainingTheFieldWithCode( list_responses, "Y" ).toStringValueResponse >
-    </#if>
-    <#if responseX == "" || responseX == "0" || responseY == "" || responseY == "0">
-        #i18n{forms.entryType.geolocalisation.message.noGeolocation}
-    <#else>
-        <input type="hidden" name="${idName}_x" id="${idName}_x" value="${responseX!}">
-        <input type="hidden" name="${idName}_y" id="${idName}_y" value="${responseY!}">
-    </#if>
+<#assign responseX = "" >
+<#assign responseY = "" >
+<#if getResponseContainingTheFieldWithCode( list_responses, "X" )?? >
+<#assign responseX = getResponseContainingTheFieldWithCode( list_responses, "X" ).toStringValueResponse >
+</#if>
+<#if getResponseContainingTheFieldWithCode( list_responses, "Y" )?? >
+<#assign responseY = getResponseContainingTheFieldWithCode( list_responses, "Y" ).toStringValueResponse >
+</#if>
+<#if responseX == "" || responseX == "0" || responseY == "" || responseY == "0">
+#i18n{forms.entryType.geolocalisation.message.noGeolocation}
+<#else>
+<input type="hidden" name="${idName}_x" id="${idName}_x" value="${responseX!}">
+<input type="hidden" name="${idName}_y" id="${idName}_y" value="${responseY!}">
+</#if>
 </#if>
 <link rel="stylesheet" href="js/plugins/genericattributes/modules/openstreetmap/lib/leaflet/leaflet.css" />
 <script type="text/javascript" src="js/plugins/genericattributes/modules/openstreetmap/lib/leaflet/leaflet.js"></script>
@@ -92,6 +91,7 @@
 
                 }
                 map.on('click', onMapClick);
+
                 mapArray.push(map);
             };
 
@@ -115,5 +115,6 @@
         }
     };
 </script>
-<script type="text/javascript" src="js/plugins/genericattributes/modules/openstreetmap/genericattributes_openstreetmap.js"></script>
+<script type="text/javascript"
+        src="js/plugins/genericattributes/modules/openstreetmap/genericattributes_openstreetmap.js"></script>
 <noscript>#i18n{module.genericattributes.openstreetmap.javascript.disabled}</noscript>
