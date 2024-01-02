@@ -7,9 +7,10 @@
 </div>
 <div class="form-row">
 <#if lat?? && lon??>
-<div id="${entry.idEntry}_gmap" class="col" style="height:300px; border:1px solid black;margin:5px 0;"></div>
+<div id="${entry.idEntry}_gmap" class="col col-osm osm-map"></div>
 </div>
 <link rel="stylesheet" href="js/plugins/genericattributes/modules/openstreetmap/lib/leaflet/leaflet.css" />
+<link rel="stylesheet" href="js/plugins/genericattributes/modules/openstreetmap/css/openstreetmap.css" />
 <script type="text/javascript" src="js/plugins/genericattributes/modules/openstreetmap/lib/leaflet/leaflet.js"></script>
 <script type="text/javascript">
 $( function( ) {

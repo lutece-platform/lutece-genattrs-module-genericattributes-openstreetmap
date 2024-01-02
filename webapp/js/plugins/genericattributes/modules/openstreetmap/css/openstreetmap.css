@@ -1,0 +1,17 @@
+/*** 										***/
+/*** Open Street Map Geolocation Styles 	***/
+/***  										***/
+.openstreetmap{	position: relative; }
+
+.col-osm{ height: 300px;}
+
+.openstreetmap-readonly .col-osm{ height: 150px; margin-top: 15px }
+
+.col.col-osm.osm-map{ margin-left: 5px; border: 1px solid #000 }
+
+.col.col-osm ul{ overflow: auto; }
+.col.col-osm ul:empty{ width: 0; flex-basis: 100%; height: 0; }
+.col.col-osm ul li:hover{ cursor: pointer; background-color: #ccc; }
+.col.col-osm ul li.active{ background-color: #000; border-color: #000; }
+
+.btn-osm{ position: absolute; top: 30px; right: 30px; }

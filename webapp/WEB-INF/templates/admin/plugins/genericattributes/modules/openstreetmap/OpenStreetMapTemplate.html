@@ -2,7 +2,9 @@
 <#assign iterationNumber = entry_iteration_number?c >
 <input type="hidden" id="${idName}_map_provider" name="${idName}_map_provider" value="${entry.mapProvider.key}"/>
 <input type="hidden" name="no_address_message" value="#i18n{module.genericattributes.openstreetmap.no_address_message}"/>
-<div class="form-row" id="${idName}_waiting" style="display:none;">#i18n{module.genericattributes.openstreetmap.loading}</div>
+<div class="form-row" id="${idName}_waiting" style="display:none;">
+    <p>#i18n{module.genericattributes.openstreetmap.loading}</p>
+</div>
 <div class="form-row">
     <div id="${idName}_gmap" data-map="${iterationNumber}" class="col col-osm osm-map" onclick="setIdAttribute(this.id)"></div>
 </div>
@@ -28,6 +30,7 @@
 </#if>
 </#if>
 <link rel="stylesheet" href="js/plugins/genericattributes/modules/openstreetmap/lib/leaflet/leaflet.css" />
+<link rel="stylesheet" href="js/plugins/genericattributes/modules/openstreetmap/css/openstreetmap.css" />
 <script src="js/plugins/genericattributes/modules/openstreetmap/lib/leaflet/leaflet.js"></script>
 <script>
 var mapData = [];
