@@ -2,17 +2,14 @@
 <#assign iterationNumber = entry_iteration_number?c >
 <input type="hidden" id="${idName}_map_provider" name="${idName}_map_provider" value="${entry.mapProvider.key}"/>
 <input type="hidden" name="no_address_message" value="#i18n{module.genericattributes.openstreetmap.no_address_message}"/>
-<div class="form-element" id="${idName}_waiting" style="display:none;">
-    #i18n{module.genericattributes.openstreetmap.loading}
-</div>
+<div class="form-row" id="${idName}_waiting" style="display:none;">#i18n{module.genericattributes.openstreetmap.loading}</div>
 <div class="form-row">
-<div id="${idName}_gmap" data-map="${iterationNumber}" class="col-md-5"
-     style="height:300px; border:1px solid black;margin:5px 0;" onclick="setIdAttribute(this.id)"></div>
+    <div id="${idName}_gmap" data-map="${iterationNumber}" class="col col-osm osm-map" style="height:300px; border:1px solid black;margin:5px 0;" onclick="setIdAttribute(this.id)"></div>
 </div>
 <input type="hidden" name="leafletMap"/>
 <#if !(editModeValue?? && editModeValue=="ReadOnly")>
-<button type="button" onclick=displayLocationOnMap(this.id) id="${idName}_gmap_button"
-        class="btn btn-primary btn-small"><i class="icon-search icon-white"></i>&nbsp;Trouver sur la carte
+<button type="button" onclick=displayLocationOnMap(this.id) id="${idName}_gmap_button" class="btn btn-primary btn-osm">
+ #i18n{portal.util.labelSearch}
 </button>
 <#else>
 <#assign responseX = "" >
@@ -31,90 +28,89 @@
 </#if>
 </#if>
 <link rel="stylesheet" href="js/plugins/genericattributes/modules/openstreetmap/lib/leaflet/leaflet.css" />
-<script type="text/javascript" src="js/plugins/genericattributes/modules/openstreetmap/lib/leaflet/leaflet.js"></script>
-<script type="text/javascript">
-    var mapData = [];
-    var mapArray = [];
-    /* this script is running for each iteration and we want to instantiate the map only at the last one */
-    window.onload = function () {
-        let iterationNumber = '${entry_iteration_number}';
-        if (document.getElementById('number_iteration_geolocation') == null) {
-            let numberAddressInput = document.createElement('input');
-            numberAddressInput.type = 'hidden';
-            numberAddressInput.id = 'number_iteration_geolocation';
-            numberAddressInput.name = 'number_iteration_geolocation';
-            if (document.getElementById('form-validate') == null) {
-                // if we are looking at the details of a response in the back office
-                document.getElementById('form-response-details').appendChild(numberAddressInput);
-            } else {
-                // user is filling the form
-                document.getElementById('form-validate').appendChild(numberAddressInput);
-            }
-            document.getElementById('number_iteration_geolocation').value = iterationNumber;
+<script src="js/plugins/genericattributes/modules/openstreetmap/lib/leaflet/leaflet.js"></script>
+<script>
+var mapData = [];
+var mapArray = [];
+/* this script is running for each iteration and we want to instantiate the map only at the last one */
+window.onload = function () {
+    let iterationNumber = '${entry_iteration_number}';
+    if (document.getElementById('number_iteration_geolocation') == null) {
+        let numberAddressInput = document.createElement('input');
+        numberAddressInput.type = 'hidden';
+        numberAddressInput.id = 'number_iteration_geolocation';
+        numberAddressInput.name = 'number_iteration_geolocation';
+        if (document.getElementById('form-validate') == null) {
+            // if we are looking at the details of a response in the back office
+            document.getElementById('form-response-details').appendChild(numberAddressInput);
         } else {
-            document.getElementById('number_iteration_geolocation').value = iterationNumber;
+            // user is filling the form
+            document.getElementById('form-validate').appendChild(numberAddressInput);
         }
-        if (parseInt(document.getElementById('number_iteration_geolocation').value) === document.getElementsByName("leafletMap").length - 1) {
-            for (let i = 0; i < document.getElementsByName("leafletMap").length; i++) {
-                const prefix = "nIt" + i + "_attribute" + "${entry.idEntry}";
-                const idMap = prefix + '_gmap';
-                let lat = 48.853;
-                let lon = 2.35;
-                let hasMarker = false;
-                if (document.getElementById(prefix + '_x').value !== "" && document.getElementById(prefix + '_y').value !== "") {
-                    lat = document.getElementById(prefix + '_y').value;
-                    lon = document.getElementById(prefix + '_x').value;
-                    hasMarker = true;
-                }
-                const iterationData = {
-                    idMap: idMap,
-                    center: [lat, lon],
-                    zoom: 10,
-                    hasMarker: hasMarker
-                };
-                mapData.push(iterationData);
+        document.getElementById('number_iteration_geolocation').value = iterationNumber;
+    } else {
+        document.getElementById('number_iteration_geolocation').value = iterationNumber;
+    }
+    if (parseInt(document.getElementById('number_iteration_geolocation').value) === document.getElementsByName("leafletMap").length - 1) {
+        for (let i = 0; i < document.getElementsByName("leafletMap").length; i++) {
+            const prefix = "nIt" + i + "_attribute" + "${entry.idEntry}";
+            const idMap = prefix + '_gmap';
+            let lat = 48.853;
+            let lon = 2.35;
+            let hasMarker = false;
+            if (document.getElementById(prefix + '_x').value !== "" && document.getElementById(prefix + '_y').value !== "") {
+                lat = document.getElementById(prefix + '_y').value;
+                lon = document.getElementById(prefix + '_x').value;
+                hasMarker = true;
             }
-            const L_tiles = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            const L_options = {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-                minZoom: 0,
-                maxZoom: 18,
-                ext: 'png'
+            const iterationData = {
+                idMap: idMap,
+                center: [lat, lon],
+                zoom: 10,
+                hasMarker: hasMarker
             };
-            const initMap = (mapElement) => {
-                const id = parseInt(mapElement.dataset.map);
-                const data = mapData[id];
-                const map = L.map(mapElement).setView(data.center, data.zoom);
-                L.tileLayer(L_tiles, L_options).addTo(map);
-                if (data.hasMarker) {
-                    L.marker(data.center).addTo(map);
-
-                }
-                map.on('click', onMapClick);
-
-                mapArray.push(map);
-            };
-
-            const allMapElements = document.querySelectorAll("[data-map]");
-            allMapElements.forEach(initMap);
+            mapData.push(iterationData);
         }
-        /*  set z-index of address suggestion so it's above leaflet zoom button */
-        for (let i = 0; i < iterationNumber + 1; i++) {
-            const addressFieldId = "nIt" + i + "_attribute" + "${entry.idEntry}" + "_address"
-            document.getElementById(addressFieldId).addEventListener('keyup', function () {
-                if (document.getElementById(addressFieldId).value.length > 3) {
-                    setTimeout(function () {
-                        const it = i + 1;
-                        const addressSuggestionId = "ui-id-" + it;
-                        console.log(addressSuggestionId);
-                        document.getElementById(addressSuggestionId).style.zIndex = '1001';
-                    }, 500);
-                }
-            })
+        const L_tiles = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        const L_options = {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+            minZoom: 0,
+            maxZoom: 18,
+            ext: 'png'
+        };
+        const initMap = (mapElement) => {
+            const id = parseInt(mapElement.dataset.map);
+            const data = mapData[id];
+            const map = L.map(mapElement).setView(data.center, data.zoom);
+            L.tileLayer(L_tiles, L_options).addTo(map);
+            if (data.hasMarker) {
+                L.marker(data.center).addTo(map);
 
-        }
-    };
+            }
+            map.on('click', onMapClick);
+
+            mapArray.push(map);
+        };
+
+        const allMapElements = document.querySelectorAll("[data-map]");
+        allMapElements.forEach(initMap);
+    }
+    /*  set z-index of address suggestion so it's above leaflet zoom button */
+    for (let i = 0; i < iterationNumber + 1; i++) {
+        const addressFieldId = "nIt" + i + "_attribute" + "${entry.idEntry}" + "_address"
+        document.getElementById(addressFieldId).addEventListener('keyup', function () {
+            if (document.getElementById(addressFieldId).value.length > 3) {
+                setTimeout(function () {
+                    const it = i + 1;
+                    const addressSuggestionId = "ui-id-" + it;
+                    console.log(addressSuggestionId);
+                    document.getElementById(addressSuggestionId).style.zIndex = '1001';
+                }, 500);
+            }
+        })
+
+    }
+};
 </script>
-<script type="text/javascript"
-        src="js/plugins/genericattributes/modules/openstreetmap/genericattributes_openstreetmap.js"></script>
+<script src="js/plugins/genericattributes/modules/openstreetmap/genericattributes_openstreetmap.js"></script>
 <noscript>#i18n{module.genericattributes.openstreetmap.javascript.disabled}</noscript>
