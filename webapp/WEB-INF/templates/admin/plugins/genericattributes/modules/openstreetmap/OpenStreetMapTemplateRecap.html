@@ -1,7 +1,5 @@
 <input type="hidden" id="${entry.idEntry}_map_provider" name="${entry.idEntry}_map_provider" value="${entry.mapProvider.key}"/>
-<div class="form-row" id="${entry.idEntry}_waiting" style="display:none;">
-<p>#i18n{module.genericattributes.openstreetmap.loading}</p>
-</div>
+<div class="form-row" id="${entry.idEntry}_waiting" style="display:none;"><p>#i18n{module.genericattributes.openstreetmap.loading}</p></div>
 <div class="form-row">
 <div class="col">${addressOpenStreetMap!}</div>
 </div>
@@ -10,9 +8,8 @@
 <div id="${entry.idEntry}_gmap" class="col col-osm osm-map"></div>
 </div>
 <link rel="stylesheet" href="js/plugins/genericattributes/modules/openstreetmap/lib/leaflet/leaflet.css" />
-<link rel="stylesheet" href="js/plugins/genericattributes/modules/openstreetmap/css/openstreetmap.css" />
-<script type="text/javascript" src="js/plugins/genericattributes/modules/openstreetmap/lib/leaflet/leaflet.js"></script>
-<script type="text/javascript">
+<script src="js/plugins/genericattributes/modules/openstreetmap/lib/leaflet/leaflet.js"></script>
+<script>
 $( function( ) {
 	var map;
 	var lat = '${lat!}';

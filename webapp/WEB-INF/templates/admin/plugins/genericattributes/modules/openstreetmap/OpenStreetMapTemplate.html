@@ -33,14 +33,12 @@
 <#assign responseY = getResponseContainingTheFieldWithCode( list_responses, "Y" ).toStringValueResponse >
 </#if>
 <#if responseX == "" || responseX == "0" || responseY == "" || responseY == "0">
-
 <#else>
 <input type="hidden" name="${idName}_x" id="${idName}_x" value="${responseX!}">
 <input type="hidden" name="${idName}_y" id="${idName}_y" value="${responseY!}">
 </#if>
 </#if>
 <link rel="stylesheet" href="js/plugins/genericattributes/modules/openstreetmap/lib/leaflet/leaflet.css" />
-<link rel="stylesheet" href="js/plugins/genericattributes/modules/openstreetmap/css/openstreetmap.css" />
 <script src="js/plugins/genericattributes/modules/openstreetmap/lib/leaflet/leaflet.js"></script>
 <script>
     var mapData = [];
@@ -55,22 +53,23 @@
             numberAddressInput.name = 'number_iteration_geolocation';
             if (document.getElementById('form-validate') == null) {
                 // if we are looking at the details of a response in the back office
-                document.getElementById('form-response-details').appendChild(numberAddressInput);
+                if( document.getElementById('form-response-details') ){
+                    document.getElementById('form-response-details').appendChild(numberAddressInput);
+                }
             } else {
                 // user is filling the form
                 document.getElementById('form-validate').appendChild(numberAddressInput);
             }
-            document.getElementById('number_iteration_geolocation').value = iterationNumber;
+            if( document.getElementById('number_iteration_geolocation') ){
+                document.getElementById('number_iteration_geolocation').value = iterationNumber;
+            }
         } else {
             document.getElementById('number_iteration_geolocation').value = iterationNumber;
         }
-        if (parseInt(document.getElementById('number_iteration_geolocation').value) === document.getElementsByName("leafletMap").length - 1) {
+        let nbIterationGeoloc = ( document.getElementById('number_iteration_geolocation') === null ? 0 : parseInt(document.getElementById('number_iteration_geolocation').value ) );
+        if ( nbIterationGeoloc === document.getElementsByName("leafletMap").length - 1) {
             for (let i = 0; i < document.getElementsByName("leafletMap").length; i++) {
-                <#if useNoIteration>
-                    const prefix = "${entry.idEntry}";
-                <#else>
-                const prefix = "nIt" + i + "_attribute" + "${entry.idEntry}";
-            </#if>
+                <#if useNoIteration>const prefix = "${entry.idEntry}";<#else>const prefix = "nIt" + i + "_attribute" + "${entry.idEntry}";</#if>
                 const idMap = prefix + '_gmap';
                 let lat = 48.853;
                 let lon = 2.35;
