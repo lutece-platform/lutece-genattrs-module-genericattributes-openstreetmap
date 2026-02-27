@@ -14,4 +14,4 @@
 .col.col-osm ul li:hover{ cursor: pointer; background-color: #ccc; }
 .col.col-osm ul li.active{ background-color: #000; border-color: #000; }
 
-.btn-osm{ position: absolute; top: 30px; right: 30px; }
+.btn-osm{ position: static; }
