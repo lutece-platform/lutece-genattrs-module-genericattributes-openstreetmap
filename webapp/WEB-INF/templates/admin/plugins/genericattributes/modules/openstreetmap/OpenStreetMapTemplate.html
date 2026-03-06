@@ -14,11 +14,11 @@
 <input type="hidden" id="${idName}_map_provider" name="${idName}_map_provider" value="openstreetmap"/>
 </#if>
 <input type="hidden" name="no_address_message" value="#i18n{module.genericattributes.openstreetmap.no_address_message}"/>
-<div class="form-row" id="${idName}_waiting" style="display:none;">
+<div class="mb-3" id="${idName}_waiting" style="display:none;">
     <p>#i18n{module.genericattributes.openstreetmap.loading}</p>
 </div>
-<div class="form-row">
-    <div id="${idName}_gmap" data-map="${iterationNumber}" class="col col-osm osm-map" onclick="setIdAttribute(this.id)"></div>
+<div class="mb-3">
+    <div id="${idName}_gmap" data-map="${iterationNumber}" class="col-osm osm-map" onclick="setIdAttribute(this.id)"></div>
 </div>
 <input type="hidden" name="leafletMap"/>
 <#if !(editModeValue?? && editModeValue=="ReadOnly")>
@@ -42,10 +42,10 @@
 <link rel="stylesheet" href="js/plugins/genericattributes/modules/openstreetmap/css/openstreetmap.css" />
 <script src="js/plugins/genericattributes/modules/openstreetmap/lib/leaflet/leaflet.js"></script>
 <script>
-    var mapData = [];
-    var mapArray = [];
+    const mapData = [];
+    const mapArray = [];
     /* this script is running for each iteration and we want to instantiate the map only at the last one */
-    window.onload = function () {
+    document.addEventListener('DOMContentLoaded', function () {
         let iterationNumber = '${entry_iteration_number}';
         if (document.getElementById('number_iteration_geolocation') == null) {
             let numberAddressInput = document.createElement('input');
@@ -112,26 +112,12 @@
             const allMapElements = document.querySelectorAll("[data-map]");
             allMapElements.forEach(initMap);
         }
-        /*  set z-index of address suggestion so it's above leaflet zoom button */
-        for (let i = 0; i < iterationNumber + 1; i++) {
-            <#if useNoIteration>
-                const prefix = "${entry.idEntry}";
-            <#else>
-            const prefix = "nIt" + i + "_attribute" + "${entry.idEntry}";
-        </#if>
-            const addressFieldId = prefix + "_address"
-            document.getElementById(addressFieldId).addEventListener('keyup', function () {
-                if (document.getElementById(addressFieldId).value.length > 3) {
-                    setTimeout(function () {
-                        const it = i + 1;
-                        const addressSuggestionId = "ui-id-" + it;
-                        document.getElementById(addressSuggestionId).style.zIndex = '1001';
-                    }, 500);
-                }
-            })
-
-        }
-    };
+        /* Ensure autocomplete suggestions appear above leaflet zoom buttons */
+        var allAutocompleteLists = document.querySelectorAll('.lutece-autocomplete-dropdown');
+        allAutocompleteLists.forEach(function(el) {
+            el.style.zIndex = '1001';
+        });
+    });
 </script>
 <script src="js/plugins/genericattributes/modules/openstreetmap/genericattributes_openstreetmap.js"></script>
 <noscript>#i18n{module.genericattributes.openstreetmap.javascript.disabled}</noscript>
