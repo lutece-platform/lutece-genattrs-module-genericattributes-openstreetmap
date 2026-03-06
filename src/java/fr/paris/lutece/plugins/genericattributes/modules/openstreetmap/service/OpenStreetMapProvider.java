@@ -38,7 +38,6 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.ReferenceItem;
 import jakarta.enterprise.context.ApplicationScoped;
 
-
 /**
  * OpenStreetMapProvider : provides Open street map support for Generic Attributes
  */
