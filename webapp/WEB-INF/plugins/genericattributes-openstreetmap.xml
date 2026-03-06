@@ -13,7 +13,7 @@
 	<provider>module.genericattributes.openstreetmap.module.provider</provider>
 	<provider-url>http://lutece.paris.fr</provider-url>
 	<icon-url>images/admin/skin/plugins/genericattributes/genericattributes.png</icon-url>
-	<copyright>Copyright 2001-2013 Mairie de Paris</copyright>
+	<copyright>Copyright 2001-2026 Mairie de Paris</copyright>
 	<core-version-dependency>
 		<min-core-version>8.0.0</min-core-version>
 		<max-core-version/>	
