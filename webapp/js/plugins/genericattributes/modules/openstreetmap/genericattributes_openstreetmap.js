@@ -1,4 +1,4 @@
-var mapIdClicked = null;
+let mapIdClicked = null;
 function onMapClick (e) {
 	const mapElementId = getIdAttribute();
 	const prefix = mapElementId.substring(0, mapElementId.length - 5);
