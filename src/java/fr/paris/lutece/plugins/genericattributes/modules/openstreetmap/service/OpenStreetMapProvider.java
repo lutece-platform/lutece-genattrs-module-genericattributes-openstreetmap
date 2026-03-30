@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2026, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,23 +36,23 @@ package fr.paris.lutece.plugins.genericattributes.modules.openstreetmap.service;
 import fr.paris.lutece.plugins.genericattributes.business.IMapProvider;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.ReferenceItem;
-
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
- * 
  * OpenStreetMapProvider : provides Open street map support for Generic Attributes
- * 
  */
+@ApplicationScoped
 public class OpenStreetMapProvider implements IMapProvider
 {
+    private static final long serialVersionUID = 1L;
     private static final String PROPERTY_KEY = "genericattributes-openstreetmap.key";
     private static final String PROPERTY_DISPLAYED_NAME = "genericattributes-openstreetmap.displayName";
     private static final String TEMPLATE_HTML = "/admin/plugins/genericattributes/modules/openstreetmap/OpenStreetMapTemplate.html";
-    private static final String TEMPLATE_RECAP_HTML = "/admin/plugins/genericattributes/modules/openstreetmap/OpenStreetMapTemplateRecap.html";
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getKey( )
     {
         return AppPropertiesService.getProperty( PROPERTY_KEY );
@@ -61,6 +61,7 @@ public class OpenStreetMapProvider implements IMapProvider
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getDisplayedName( )
     {
         return AppPropertiesService.getProperty( PROPERTY_DISPLAYED_NAME );
@@ -69,21 +70,16 @@ public class OpenStreetMapProvider implements IMapProvider
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getHtmlCode( )
     {
         return TEMPLATE_HTML;
-    }
-    /**
-     * {@inheritDoc}
-     */
-    public String getHtmlRecapCode( )
-    {
-        return TEMPLATE_RECAP_HTML;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public ReferenceItem toRefItem( )
     {
         ReferenceItem refItem = new ReferenceItem( );
@@ -103,10 +99,12 @@ public class OpenStreetMapProvider implements IMapProvider
         return "Open Street Map Provider";
     }
 
-	@Override
-	public Object getParameter(int arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object getParameter( int nKey )
+    {
+        return null;
+    }
 }
