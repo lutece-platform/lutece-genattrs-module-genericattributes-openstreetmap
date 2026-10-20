@@ -60,12 +60,21 @@
 		setLocation(prefix, latlng);
 	}
 
+	// writes a message, as text, in the status region of the map (announced by the screen readers)
+	function announce(prefix, message) {
+		const status = field(prefix, '_gmap_status');
+		if (status) {
+			status.textContent = message || '';
+		}
+	}
+
 	function displayLocation(prefix, noAddressMessage) {
 		const latlng = coordinates(prefix);
 		if (!latlng) {
-			alert(noAddressMessage);
+			announce(prefix, noAddressMessage);
 			return;
 		}
+		announce(prefix, '');
 		placeMarker(prefix, latlng, 15);
 	}
 
@@ -88,9 +97,12 @@
 		const address = result.address || {};
 		const city = address.city || address.town || address.village || '';
 		const input = addressInput(prefix);
+		const label = [address.house_number, address.road, address.postcode, city].filter(Boolean).join(' ');
 		if (input) {
-			input.value = [address.house_number, address.road, address.postcode, city].filter(Boolean).join(' ');
+			input.value = label;
 		}
+		const button = field(prefix, '_gmap_button');
+		announce(prefix, label && button && button.dataset.addressFound ? button.dataset.addressFound + ' ' + label : label);
 		const idAddress = field(prefix, '_idAddress');
 		if (idAddress) {
 			idAddress.value = result.osm_id || '';
