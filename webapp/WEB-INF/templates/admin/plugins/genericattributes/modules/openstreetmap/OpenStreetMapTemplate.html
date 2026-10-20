@@ -12,10 +12,11 @@
 </#if>
 <input type="hidden" id="${idName}_map_provider" name="${idName}_map_provider" value="${entry.mapProvider.key!'openstreetmap'}"/>
 <div class="row">
-    <div id="${idName}_gmap" data-map="${idName}" class="col col-osm osm-map"></div>
+    <div id="${idName}_gmap" data-map="${idName}" class="col col-osm osm-map" role="region" aria-label="#i18n{module.genericattributes.openstreetmap.map_label}"></div>
 </div>
 <#if !readOnly>
-<button type="button" id="${idName}_gmap_button" class="btn btn-primary mt-2" data-no-address="${i18n('module.genericattributes.openstreetmap.no_address_message')}">#i18n{portal.util.labelSearch}</button>
+<button type="button" id="${idName}_gmap_button" class="btn btn-primary mt-2" data-no-address="${i18n('module.genericattributes.openstreetmap.no_address_message')}" data-address-found="${i18n('module.genericattributes.openstreetmap.address_found_message')}">#i18n{module.genericattributes.openstreetmap.show_on_map}</button>
+<p id="${idName}_gmap_status" class="form-text mt-1 mb-0" role="status" aria-live="polite"></p>
 </#if>
 <link rel="stylesheet" href="js/plugins/genericattributes/modules/openstreetmap/lib/leaflet/leaflet.css" />
 <link rel="stylesheet" href="js/plugins/genericattributes/modules/openstreetmap/css/openstreetmap.css" />
