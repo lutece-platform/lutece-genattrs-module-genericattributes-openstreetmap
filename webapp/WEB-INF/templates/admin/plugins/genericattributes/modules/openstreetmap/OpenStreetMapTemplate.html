@@ -15,7 +15,7 @@
     <div id="${idName}_gmap" data-map="${idName}" class="col col-osm osm-map"></div>
 </div>
 <#if !readOnly>
-<button type="button" id="${idName}_gmap_button" class="btn btn-primary mt-2" data-no-address="#i18n{module.genericattributes.openstreetmap.no_address_message}">#i18n{portal.util.labelSearch}</button>
+<button type="button" id="${idName}_gmap_button" class="btn btn-primary mt-2" data-no-address="${i18n('module.genericattributes.openstreetmap.no_address_message')}">#i18n{portal.util.labelSearch}</button>
 </#if>
 <link rel="stylesheet" href="js/plugins/genericattributes/modules/openstreetmap/lib/leaflet/leaflet.css" />
 <link rel="stylesheet" href="js/plugins/genericattributes/modules/openstreetmap/css/openstreetmap.css" />
@@ -23,7 +23,7 @@
 <script src="js/plugins/genericattributes/modules/openstreetmap/genericattributes_openstreetmap.js"></script>
 <script>
 (() => {
-    const init = () => osmInitMap('${idName}', ${readOnly?c}, '${responseX?js_string}', '${responseY?js_string}');
+    const init = () => osmInitMap('${idName?js_string?no_esc}', ${readOnly?c}, '${responseX?js_string?no_esc}', '${responseY?js_string?no_esc}');
     if (document.readyState === 'complete') {
         init();
     } else {
