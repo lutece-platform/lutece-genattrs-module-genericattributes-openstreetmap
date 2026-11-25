@@ -15,8 +15,10 @@
 		return document.getElementById(prefix + suffix);
 	}
 
+	// Address container: <prefix>_address (back office), <prefix>_autocomplete (front office of plugin-forms, address
+	// autocomplete), <prefix> (hidden address of the map only edit modes)
 	function addressElement(prefix) {
-		return field(prefix, '_address') || field(prefix, '');
+		return field(prefix, '_address') || field(prefix, '_autocomplete') || field(prefix, '');
 	}
 
 	function addressInput(prefix) {
