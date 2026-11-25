@@ -53,8 +53,9 @@
 		return value !== undefined && value !== null && value !== '' && value !== '0';
 	}
 
+	// coordinates stored as text: a value that is not a number (typed or forged) gives no position
 	function toLatLng(x, y) {
-		return isSet(x) && isSet(y) ? [y, x] : null;
+		return isSet(x) && isSet(y) && isFinite(Number(x)) && isFinite(Number(y)) ? [Number(y), Number(x)] : null;
 	}
 
 	function coordinates(prefix) {
