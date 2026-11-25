@@ -118,17 +118,35 @@
 		}
 	}
 
+	// reverse geocoding of the point clicked; null when Nominatim finds no address (sea, error body) or cannot be reached
+	async function reverseGeocode(latlng) {
+		try {
+			const response = await fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + latlng.lat + '&lon=' + latlng.lng);
+			if (!response.ok) {
+				return null;
+			}
+			const result = await response.json();
+			return result && !result.error && result.address ? result : null;
+		} catch (e) {
+			return null;
+		}
+	}
+
 	async function setLocation(prefix, latlng) {
-		const response = await fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + latlng.lat + '&lon=' + latlng.lng);
-		const result = await response.json();
-		const address = result.address || {};
+		const button = field(prefix, '_gmap_button');
+		const result = await reverseGeocode(latlng);
+		const address = result ? result.address : {};
 		const city = address.city || address.town || address.village || '';
-		const input = addressInput(prefix);
 		const label = [address.house_number, address.road, address.postcode, city].filter(Boolean).join(' ');
+		if (!label) {
+			// no address at this point: the address already chosen is kept, the user is told
+			announce(prefix, button && button.dataset.addressNotFound ? button.dataset.addressNotFound : '');
+			return;
+		}
+		const input = addressInput(prefix);
 		if (input) {
 			input.value = label;
 		}
-		const button = field(prefix, '_gmap_button');
 		announce(prefix, label && button && button.dataset.addressFound ? button.dataset.addressFound + ' ' + label : label);
 		const idAddress = questionField(prefix, '_idAddress');
 		if (idAddress) {
