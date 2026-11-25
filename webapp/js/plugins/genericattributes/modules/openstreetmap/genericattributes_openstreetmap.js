@@ -15,10 +15,30 @@
 		return document.getElementById(prefix + suffix);
 	}
 
-	// Address container: <prefix>_address (back office), <prefix>_autocomplete (front office of plugin-forms, address
-	// autocomplete), <prefix> (hidden address of the map only edit modes)
+	// The map elements (_gmap, _gmap_button, _gmap_status) are named with the prefix given to osmInitMap. The fields
+	// of the question (_x, _y, _idAddress, _geometry, address) are named by the plugin of the form: plugin-forms uses
+	// the same prefix (nIt0_attribute<id>), plugin-appointment the id of the entry alone (<id>_x).
+	function resolveFieldsPrefix(prefix) {
+		if (field(prefix, '_x')) {
+			return prefix;
+		}
+		const entryId = prefix.replace(/^(?:nIt\d+_)?attribute/, '');
+		return entryId !== prefix && field(entryId, '_x') ? entryId : prefix;
+	}
+
+	function fieldsPrefix(prefix) {
+		const state = maps[prefix];
+		return state ? state.fields : resolveFieldsPrefix(prefix);
+	}
+
+	function questionField(prefix, suffix) {
+		return field(fieldsPrefix(prefix), suffix);
+	}
+
+	// Address container: <prefix>_address (back office, appointment), <prefix>_autocomplete (front office of
+	// plugin-forms, address autocomplete), <prefix> (hidden address of the map only edit modes)
 	function addressElement(prefix) {
-		return field(prefix, '_address') || field(prefix, '_autocomplete') || field(prefix, '');
+		return questionField(prefix, '_address') || questionField(prefix, '_autocomplete') || questionField(prefix, '');
 	}
 
 	function addressInput(prefix) {
@@ -38,8 +58,8 @@
 	}
 
 	function coordinates(prefix) {
-		const x = field(prefix, '_x');
-		const y = field(prefix, '_y');
+		const x = questionField(prefix, '_x');
+		const y = questionField(prefix, '_y');
 		return x && y ? toLatLng(x.value, y.value) : null;
 	}
 
@@ -57,8 +77,12 @@
 
 	function onMapClick(prefix, latlng) {
 		placeMarker(prefix, latlng);
-		field(prefix, '_x').value = latlng.lng;
-		field(prefix, '_y').value = latlng.lat;
+		const x = questionField(prefix, '_x');
+		const y = questionField(prefix, '_y');
+		if (x && y) {
+			x.value = latlng.lng;
+			y.value = latlng.lat;
+		}
 		setLocation(prefix, latlng);
 	}
 
@@ -105,11 +129,11 @@
 		}
 		const button = field(prefix, '_gmap_button');
 		announce(prefix, label && button && button.dataset.addressFound ? button.dataset.addressFound + ' ' + label : label);
-		const idAddress = field(prefix, '_idAddress');
+		const idAddress = questionField(prefix, '_idAddress');
 		if (idAddress) {
 			idAddress.value = result.osm_id || '';
 		}
-		const geometry = field(prefix, '_geometry');
+		const geometry = questionField(prefix, '_geometry');
 		if (geometry) {
 			geometry.value = result.osm_type || '';
 		}
@@ -121,10 +145,12 @@
 		if (!mapElement || maps[prefix]) {
 			return;
 		}
+		const fields = resolveFieldsPrefix(prefix);
+		maps[prefix] = { map: null, marker: null, fields: fields };
 		const latlng = readOnly ? toLatLng(x, y) || coordinates(prefix) : coordinates(prefix);
 		const map = L.map(mapElement).setView(latlng || DEFAULT_CENTER, latlng ? 15 : 10);
 		L.tileLayer(TILES, OPTIONS).addTo(map);
-		maps[prefix] = { map: map, marker: null };
+		maps[prefix].map = map;
 		if (latlng) {
 			placeMarker(prefix, latlng);
 		}
